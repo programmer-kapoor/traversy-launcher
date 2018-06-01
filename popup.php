@@ -1,3 +1,42 @@
+
+<?php
+$myfile = fopen("link.txt", "a+") or die("Unable to open file!");
+
+$err="Somethings went Wrong!Try again";
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+//echo $_POST['sub-btn'];
+if(isset($_POST['sub-btn']))
+{
+  $txt=test_input($_POST['addLink']);
+  //$_POST['sub-btn'];
+  // echo $txt;
+  $err="Added Successfully!";
+  fwrite($myfile, $txt);
+  header("Location:action.php?msg=".$err);
+  fclose($myfile);
+}
+
+   
+
+
+echo "<br>";
+
+
+ $lk=file_get_contents("link.txt");
+
+echo "<br>";
+
+echo "<br>";
+echo "shu";
+?>
+
 <!doctype html>
 <html>
 
@@ -7,7 +46,7 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
     crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
-  <script src="popup.js"></script>
+
 </head>
 
 <body>
@@ -82,14 +121,22 @@
     </div> <!--drop box -->
      
     <div class="container-link">
-       <form>
-         <input type="text" id="addLink">
-         <button type="button" onclick="sub()">Submit</button>
+       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+         <input type="text" name="addLink">
+         <input type="submit" name="sub-btn" value="submit">
        </form>
     </div>
    </div> <!--container -->
 
-   <script src="popup.js"></script>
+   <a href="<?php echo $lk;?>"><?php echo $lk;?> </a>
+   
+   <script
+   src="https://code.jquery.com/jquery-3.2.1.min.js"
+ ></script>
+
+
+
+   <script src=""></script>
 </body>
 
 </html>
