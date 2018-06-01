@@ -1,8 +1,10 @@
 
 <?php
-$myfile = fopen("link.txt", "a+") or die("Unable to open file!");
+$myfile = fopen("link.txt", "a") or die("Unable to open file!");
 
-$err="Somethings went Wrong!Try again";
+$myfileR = fopen("link.txt", "r") or die("Unable to open file!");
+
+$err="";
 
 function test_input($data) {
   $data = trim($data);
@@ -17,10 +19,22 @@ if(isset($_POST['sub-btn']))
   $txt=test_input($_POST['addLink']);
   //$_POST['sub-btn'];
   // echo $txt;
+  if($txt!=""){
   $err="Added Successfully!";
+  $txt=$txt."\n";
+  echo $txt;
+
   fwrite($myfile, $txt);
-  header("Location:action.php?msg=".$err);
-  fclose($myfile);
+  header("Location:popup.php?msg=".$err);
+  fclose($myfile);}
+  else{
+    $err="fill the column!";
+  
+    header("Location:action.php?msg=".$err);
+  }
+}
+else{
+  $err="Somethings went Wrong!Try again";
 }
 
    
@@ -122,14 +136,32 @@ echo "shu";
      
     <div class="container-link">
        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-         <input type="text" name="addLink">
+         <input type="text" name="addLink" required>
          <input type="submit" name="sub-btn" value="submit">
        </form>
     </div>
    </div> <!--container -->
 
    <a href="<?php echo $lk;?>"><?php echo $lk;?> </a>
+   -------------------<br>
    
+
+
+
+<? while (!feof($myfileR)): ?>
+  
+<? endwhile; ?>
+***********<br>
+<?php
+
+while(!feof($myfileR)) {
+  echo fgets($myfile) . "<br>";
+
+// echo "cool";
+}
+
+;?>
+
    <script
    src="https://code.jquery.com/jquery-3.2.1.min.js"
  ></script>
