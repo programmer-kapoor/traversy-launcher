@@ -1,2 +1,5 @@
 https://www.youtube.com/?gl=IN
 https://www.facebook.com/
+https://developer.chrome.com/apps/manifest/icons
+https://www.w3schools.com/php/php_ref_filesystem.asp
+https://www.youtube.com/watch?v=H_P3VeCszCo

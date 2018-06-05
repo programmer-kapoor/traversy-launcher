@@ -13,6 +13,35 @@ function test_input($data) {
   return $data;
 }
 
+$string = 'place1 place2';
+$arr = explode(' ', $string);
+echo $arr[0]; // place1
+echo $arr[1]; // place2
+echo "<br>";
+
+$arr1=[];
+function pk($ln){
+   static $a=0;
+     echo $ln."----";
+     gettype($ln);
+    //  array_push($arr1,$ln);
+    $a++;
+   }
+
+
+while(! feof($myfileR))
+  {
+  // echo fgets($myfileR). "<br />";
+    $ln= fgets($myfileR);
+    pk($ln);
+  }
+ 
+  // print_r($ln);
+  // echo gettype($ln), "\n";
+  var_dump($arr1);
+
+
+
 //echo $_POST['sub-btn'];
 if(isset($_POST['sub-btn']))
 {
@@ -22,7 +51,7 @@ if(isset($_POST['sub-btn']))
   if($txt!=""){
   $err="Added Successfully!";
   $txt=$txt."\n";
-  echo $txt;
+  // echo $txt;
 
   fwrite($myfile, $txt);
   header("Location:popup.php?msg=".$err);
@@ -145,22 +174,18 @@ echo "shu";
    <a href="<?php echo $lk;?>"><?php echo $lk;?> </a>
    -------------------<br>
    
+    
 
 
 
-<? while (!feof($myfileR)): ?>
-  
-<? endwhile; ?>
-***********<br>
-<?php
 
-while(!feof($myfileR)) {
-  echo fgets($myfile) . "<br>";
+<br>
+***********
 
-// echo "cool";
-}
 
-;?>
+<!-- <h3><?php echo $a;?></h3> -->
+
+
 
    <script
    src="https://code.jquery.com/jquery-3.2.1.min.js"
