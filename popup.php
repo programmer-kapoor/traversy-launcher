@@ -1,11 +1,11 @@
 
 <?php
 $myfile = fopen("link.txt", "a") or die("Unable to open file!");
+$my = file('link.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$n=sizeof($my);
+$err="";$i=0;
 
-$myfileR = fopen("link.txt", "r") or die("Unable to open file!");
-
-$err="";
-
+//trimp or validate the input
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -13,52 +13,64 @@ function test_input($data) {
   return $data;
 }
 
-$string = 'place1 place2';
-$arr = explode(' ', $string);
-echo $arr[0]; // place1
-echo $arr[1]; // place2
-echo "<br>";
+//url valdation
+function checkUrl($data){
+//  $url = filter_var($data, FILTER_SANITIZE_URL);
 
-$arr1=[];
-function pk($ln){
-   static $a=0;
-     echo $ln."----";
-     gettype($ln);
-    //  array_push($arr1,$ln);
-    $a++;
-   }
+  if (filter_var($data, FILTER_VALIDATE_URL)) {
+    return 1;
+  } else {
+    return 0;
 
-
-while(! feof($myfileR))
-  {
-  // echo fgets($myfileR). "<br />";
-    $ln= fgets($myfileR);
-    pk($ln);
   }
- 
-  // print_r($ln);
-  // echo gettype($ln), "\n";
-  var_dump($arr1);
+}
+//check active URL
+function url_exists($url) {
+    //if (!$fp = curl_init($url)) return false;
+      return true;
+
+   //  $file_headers = @get_headers($url);
+   //  if(!$file_headers || $file_headers[0] == 'HTTPS/1.1 404 Not Found') {
+   //    $exists = false;
+   //  }
+   // else {
+   //  $exists = true;
+   // }
+}
+
+//trim the name
+function func($data){
+   $a=parse_url($data, PHP_URL_HOST);
+   $a=rtrim($a,".com");
+   $a=ltrim($a,"www.");
+   return $a;
+}
 
 
-
-//echo $_POST['sub-btn'];
+//input from form
 if(isset($_POST['sub-btn']))
 {
   $txt=test_input($_POST['addLink']);
   //$_POST['sub-btn'];
   // echo $txt;
-  if($txt!=""){
-  $err="Added Successfully!";
-  $txt=$txt."\n";
-  // echo $txt;
+  if($txt!="" && checkUrl($txt)){
+     if(url_exists($txt)){
 
-  fwrite($myfile, $txt);
-  header("Location:popup.php?msg=".$err);
-  fclose($myfile);}
+      $err="Added Successfully!";
+      echo $err;
+      $txt=$txt."\n";
+      // echo $txt;
+      fwrite($myfile, $txt);
+      header("Location:popup.php?msg=".$err);
+      fclose($myfile);
+    }else{
+       $err2="not active url";
+       echo $err2;
+    }
+}
   else{
     $err="fill the column!";
-  
+
     header("Location:action.php?msg=".$err);
   }
 }
@@ -66,18 +78,22 @@ else{
   $err="Somethings went Wrong!Try again";
 }
 
-   
+//var_dump($my);
+
+for($s=0;$s<sizeof($my);$s++){
+          // $check=checkUrl($my[$s]);
+          // if($check==1)
+          //   echo "valid";
+          // else {
+          //   echo "invalid";
+          // }
+   echo $my[$s];
+   echo "<br>";
+}
 
 
-echo "<br>";
 
 
- $lk=file_get_contents("link.txt");
-
-echo "<br>";
-
-echo "<br>";
-echo "shu";
 ?>
 
 <!doctype html>
@@ -130,7 +146,7 @@ echo "shu";
           <i class="fa fa-facebook"></i>
         </a>
       </div>
-      
+
 
       <div class="flex">
         <a href="https://www.github.com/bradtraversy" target="_blank">
@@ -143,7 +159,7 @@ echo "shu";
 
   <div class="modal-icons">
       <div class="flex-container">
-  
+
         <div class="flex d-box" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
            <!-- <div id="dD"  > -->
               <a id="dD2" href="https://www.traversymedia.com" target="_blank">
@@ -155,35 +171,34 @@ echo "shu";
         <div class="flex">
             <div id="dD1" class="d-box" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
 
-            </div> 
+            </div>
         </div>
-  
-       
-  
+
+
+
       </div>
     </div> <!--drop box -->
-     
+
     <div class="container-link">
        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
          <input type="text" name="addLink" required>
          <input type="submit" name="sub-btn" value="submit">
        </form>
     </div>
-   </div> <!--container -->
-
-   <a href="<?php echo $lk;?>"><?php echo $lk;?> </a>
-   -------------------<br>
-   
-    
+  </div> <!--container -->
 
 
+<?php while($i<=$n-1):?>
+   <a href="<?php echo $my[$i] ;?>"><?php echo func($my[$i]);?></a>
+   <?php $i++ ;echo "<br>";?>
+<?php endwhile;?>
 
 
-<br>
-***********
 
 
-<!-- <h3><?php echo $a;?></h3> -->
+
+
+
 
 
 
