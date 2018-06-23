@@ -41,8 +41,9 @@ function url_exists($url) {
 //trim the name
 function func($data){
    $a=parse_url($data, PHP_URL_HOST);
-   $a=rtrim($a,".com");
-   $a=ltrim($a,"www.");
+   $a=rtrim($a,"com");
+   $a=ltrim($a,"w");
+   $a=trim($a,'.');
    return $a;
 }
 
@@ -109,13 +110,16 @@ for($s=0;$s<sizeof($my);$s++){
 </head>
 
 <body>
+<!--
   <div class="container">
+
     <div class="modal-header">
     <h1 class="logo">
       <img class="logo-icon" src="images/traversy-logo.png">Traversy Launcher
       <span class="version">(1.0.0)</span>
     </h1>
   </div>
+
   <div class="modal-content">
     <p>Easily Access Traversy Media content</p>
   </div>
@@ -157,27 +161,7 @@ for($s=0;$s<sizeof($my);$s++){
     </div>
   </div>
 
-  <div class="modal-icons">
-      <div class="flex-container">
 
-        <div class="flex d-box" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
-           <!-- <div id="dD"  > -->
-              <a id="dD2" href="https://www.traversymedia.com" target="_blank">
-                <i class="fa fa-globe"></i>
-               </a>
-           <!-- </div>  -->
-        </div>
-
-        <div class="flex">
-            <div id="dD1" class="d-box" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
-
-            </div>
-        </div>
-
-
-
-      </div>
-    </div> <!--drop box -->
 
     <div class="container-link">
        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -185,8 +169,24 @@ for($s=0;$s<sizeof($my);$s++){
          <input type="submit" name="sub-btn" value="submit">
        </form>
     </div>
-  </div> <!--container -->
+  </div>   !container -->
 
+
+   <div class='container'>
+     <div class="flex-modal">
+       <div><img src="icon1.png" alt="iocn"></div>
+       <div>
+       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+         <input type="text" name="addLink" placeholder="Enter url" required>
+         <input type="submit" name="sub-btn" value="submit">
+       </form>
+     </div>
+       <div class="">
+        <button type="button" name="button">Button</button>
+       </div>
+     </div>
+
+   </div>
 
 <?php while($i<=$n-1):?>
    <a href="<?php echo $my[$i] ;?>"><?php echo func($my[$i]);?></a>
@@ -208,7 +208,7 @@ for($s=0;$s<sizeof($my);$s++){
 
 
 
-   <script src=""></script>
+   <script src="popup.js"></script>
 </body>
 
 </html>
